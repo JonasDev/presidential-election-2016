@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script src="assets/d3.v3.min.js"></script>
+<script src="assets/jquery.min.js"></script>
+
+<script src="assets/queue.v1.min.js"></script>
+<script src="assets/topojson.v1.min.js"></script>
+
+</head>
+<body>
+
+<div id="map"></div>
+
+<script type="text/javascript" charset="utf-8">
+
+var projection = d3.geo.albersUsa()
+  .scale(1000)
+  .translate([450, 350]);
+
+var path = d3.geo.path()
+  .projection(projection);
+
+var map_svg = d3.select("#map").append("svg")
+  .attr("width", "1000px")
+  .attr("height", "1000px");
+
+var map = "counties2.json";
+var clusters = "clustersout.csv"
+
+$(function(){
+  queue()
+    // .defer(d3.csv, datacsv)
+    .defer(d3.csv, clusters)
+    .defer(d3.json, map)
+  .await(dataDidLoad);
+});
+
+function dataDidLoad(error, clusters, map) {
+
+  // console.log(clusters);
+  clusters_dict = {};
+  for (i=0; i < clusters.length; i++) {
+    clusters_dict[clusters[i].fips] = clusters[i].cluster;
+  }
+
+  // console.log(clusters_dict);
+  drawMapOutline(map);
+
+};
+
+function fipsColor(geoid) {
+  colorArray = ['#66c2a5','#fc8d62','#8da0cb','#e78ac3'];
+  // console.log(colorArray[1]);
+  return colorArray[clusters_dict[geoid]];
+}
+
+function drawMapOutline(map){
+
+  console.log(map);
+
+  map_svg.append("g")
+    .selectAll("path")
+      .data(topojson.feature(map, map.objects.countiestiger2010).features)
+    .enter().append("path")
+    .attr("fill", function(d,i) { return fipsColor(d.properties.GEOID10); })
+    .attr("stroke", "black")
+    .attr("d", path)
+    .on("click", function(d,i) { console.log(d.properties.NAME10); });
+}
+</script>
+</body>
+</html>
