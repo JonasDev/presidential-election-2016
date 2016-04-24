@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Final Project Write-Up}
+\author{Jay Mahabal}
+\date{April 2016}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+One of the ideas we wanted to do for this project is to use clustering to group similar states together. These grouped states would all share a model. This way we could account for important features not explicitly in our dataset, assuming that these states share that same influence. \par
+
+
+The naive approach to solve this problem would have been to simply perform a k-means clustering on the demographic features that we had in our dataset. However an analysis of those features revealed that many revealed the same information (i.e. \% black and \% white). To account for this, for each state, we wanted to rank each feature by how much it contributed to the outcome of the 2012 GOP Primary. What we hoped for would be an easy characterization of states, such as "not very white" vs. "religious." What we didn't want to do was decide which features mattered manually, or to rely on traditional 'wisdom.' 
+
+% 2012 dataset
+
+We ran a random forest to determine the extent of the that the feature mattered, and then ranked the features. One problem we thought of was the necessity of ranking all of the features. Were we still not overfitting the data, pushing for certain demographics to matter more? We thought it through, and realized that by ranking the features, the states that were similar would all cluster around certain axes, as opposed to 
+
+Now, in order to determine the feature importance for all counties, and not just the counties that have already voted, we needed previous elections results, assuming that states were unlikely to change (too) much demographically. Originally, we wanted to run this analysis for for the GOP and Democratic race. We already had a great data sources for the 2016 race, but for some reason we couldn't find any great data sources for the primary results of the 2012 Democratic race. In turns out (or rather, on reflection) that the returning president Obama was running for the Dem. nomination virtually unopposed, and so the results, if they existed, would have been useless. Then, due to the dearth of information on the 2008 race, and the fact that over 8 years demographics would have changed quite significantly, we decided to stick to the GOP race.
+
+We decided to use Python's Skikit-Learn's K-Means clustering algorithm. It didn't make sense to use spectral clustering, as states that would be clustered spectrally would not be similar in the sense that we wanted to. In that sense, our goal clusters were very traditional. 
+
+
+\par
+
+
+% why over all features as opposed to just a few features
+% home state
+
+
+We use the 2012 GOP Primary dataset 
+
+
+Of course, we ran into a few problems. Firstly, because there was a Romney sweep of some states, especially near the tail-end of the election, the feature importance attributes for those states were all 0, as it would be impossible to determine the extent to which these mattered.
+% Why did we not use the percentage by which Romney or __ won?
+This, while inconvenient, would have been fine, as these states would form a cluster on their own, no biggie. However, when we clustered the states, we found that (across k-values 2-8) there were only two major clusters, the Romney sweeps and one other. Our idea of using different models for different states wasn't working out.\par
+We went back to the drawing board. We knew that we would have to predict results based on counties, but those counties didn't necessarily need to be part of the same state, as long in the end we aggregated by state. So we decided to cluster all counties, as opposed to clustering states.\par
+We again ran into the problem of having duplicate features, so we ran a random forest over the entire dataset, and just kept the top ten features. Now, we normalized the data by feature and by county, and clustered. Our resulting clusters still weren't as equal as we had hoped, but they were workable with. We decided to proceed using this clustering, and build four models around these four clusters.  
+
+
+
+
+
+\end{document}
