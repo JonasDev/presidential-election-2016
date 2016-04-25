@@ -41,6 +41,19 @@ class TestElection2016(TestCase):
 
         print 'Srings have been encoded as numbers for regression model'
 
+    def test_preprocessingRemoveUnnecessaryFeatures(self):
+        e = Election2016()
+        e.loadDataSets()
+
+        e.preprocessDataSets()
+
+        self.assertFalse('area_name' in e.data.columns)
+        self.assertFalse('county' in e.data.columns)
+        self.assertFalse('state' in e.data.columns)
+        self.assertFalse('party' in e.data.columns)
+        self.assertFalse('votes' in e.data.columns)
+
+        print 'Unnecessary features have been removed'
 
 
 
