@@ -66,4 +66,18 @@ class TestElection2016(TestCase):
 
         print 'Test set includes only counties that have not voted so far'
 
+    def test_candidates(self):
+        e = Election2016()
+        e.loadDataSets()
+        e.preprocessDataSets()
+        candidates = ['Donald Trump', 'Ted Cruz', 'John Kasich']
+
+        candidateDataMapping = e.setupCandidates(e.data)
+
+        mapping = [can in candidates for can in candidateDataMapping.keys()]
+        self.assertEqual(mapping, [True, True, True])
+
+        print 'Data for all candidates has been mapped'
+
+
 
