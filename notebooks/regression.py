@@ -10,7 +10,8 @@ class RegressionModel():
 
     def __init__(self, data, candidateDataMapping, testDataFrame):
 
-        self.clusters = pd.read_csv(r'/Users/Jonas/OneDrive/Google Drive/Uni/UCB16/Machine Learning and Analytics/final_project/presidential-election-2016/visualization/clustersout.csv')
+        self.clusters = pd.read_csv('../visualization/clustersout.csv')
+        # self.clusters = pd.read_csv(r'/Users/Jonas/OneDrive/Google Drive/Uni/UCB16/Machine Learning and Analytics/final_project/presidential-election-2016/visualization/clustersout.csv')
         self.data = data
         self.candidateDataMapping = candidateDataMapping
         self.candidates = candidateDataMapping.keys()
