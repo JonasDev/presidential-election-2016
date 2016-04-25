@@ -9,7 +9,15 @@ from regression import RegressionModel
 class Election2016:
 
     def __init__(self):
-        a = 1
+        test = 1
+
+    def run(self):
+        self.loadDataSets()
+        self.preprocessDataSets()
+        self.candidateDataMapping = self.setupCandidates(self.data)
+
+        self.regressor = RegressionModel(self.data, self.candidateDataMapping, self.testDataFrame)
+        self.regressor.performRegression()
 
 
     def loadDataSets(self):
@@ -94,13 +102,7 @@ class Election2016:
         return candidateDataMapping
 
 
-    def run(self):
-        self.loadDataSets()
-        self.preprocessDataSets()
-        self.candidateDataMapping = self.setupCandidates(self.data)
 
-        self.regressor = RegressionModel(self.data, self.candidateDataMapping, self.testDataFrame)
-        self.regressor.performRegression()
 
 
     # introduce voted column TODO: fill in correctly
