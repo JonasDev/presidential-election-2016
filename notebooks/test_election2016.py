@@ -55,5 +55,15 @@ class TestElection2016(TestCase):
 
         print 'Unnecessary features have been removed'
 
+    def test_preprocessingNoVotesInTestSet(self):
+        e = Election2016()
+        e.loadDataSets()
+
+        e.preprocessDataSets()
+
+        self.assertTrue(len(e.testDataFrame['voted'].unique()) == 1)
+        self.assertTrue(e.testDataFrame['voted'].unique()[0] == 0)
+
+        print 'Test set includes only counties that have not voted so far'
 
 
