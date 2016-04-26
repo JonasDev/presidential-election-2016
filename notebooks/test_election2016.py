@@ -39,7 +39,7 @@ class TestElection2016(TestCase):
 
         self.assertTrue(type(e.data['state_number'].iloc[0]) is np.int64)
 
-        print 'Srings have been encoded as numbers for regression model'
+        print 'Strings have been encoded as numbers for regression model'
 
     def test_preprocessingRemoveUnnecessaryFeatures(self):
         e = Election2016()
