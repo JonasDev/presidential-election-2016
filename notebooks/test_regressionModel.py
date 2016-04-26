@@ -35,3 +35,4 @@ class TestRegressionModel(TestCase):
         self.assertTrue(len(r.clusterResults) == 4)
 
         print "Regressor model for every cluster has been built"
+

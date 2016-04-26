@@ -79,5 +79,15 @@ class TestElection2016(TestCase):
 
         print 'Data for all candidates has been mapped'
 
+    def test_setupTestSet(self):
+        e = Election2016()
+        e.loadDataSets()
+        e.preprocessDataSets()
+
+        testDataFrame = e.setupTestSet(e.data)
+
+        self.assertFalse('candidate' in testDataFrame.columns)
+
+        print 'Test data frame properly setup'
 
 
