@@ -90,4 +90,14 @@ class TestElection2016(TestCase):
 
         print 'Test data frame properly setup'
 
+    def test_StateLevelInformationRemoved(self):
+        e = Election2016()
+        e.loadDataSets()
+        e.preprocessDataSets()
+
+
+        self.assertTrue(len(e.data[e.data['state_number'] == 0]) == 0)
+
+        print 'State level information removed'
+
 
