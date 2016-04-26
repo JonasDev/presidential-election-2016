@@ -16,4 +16,12 @@ class TestRegressionModel(TestCase):
 
         print 'Regression model properly initialized'
 
-    
+    def test_performRegression(self):
+        e = Election2016()
+        e.init()
+
+        r = RegressionModel(e.data, e.candidateDataMapping, e.testDataFrame)
+        r.performRegression()
+        self.assertTrue(len(r.mse) > 0)
+
+        print "Regressor benchmark performed"
