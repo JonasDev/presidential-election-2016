@@ -11,11 +11,12 @@ class Election2016:
     def __init__(self):
         test = 1
 
-    def run(self):
+    def init(self):
         self.loadDataSets()
         self.preprocessDataSets()
         self.candidateDataMapping = self.setupCandidates(self.data)
 
+    def runRegression(self):
         self.regressor = RegressionModel(self.data, self.candidateDataMapping, self.testDataFrame)
         self.regressor.performRegression()
 
