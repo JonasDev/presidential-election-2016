@@ -18,8 +18,8 @@ class Election2016:
 
     def runRegression(self):
         self.regressor = RegressionModel(self.data, self.candidateDataMapping, self.testDataFrame)
-        self.regressor.performRegression()
-
+        # self.regressor.performRegression()
+        self.regressor.run()
 
     def loadDataSets(self):
         # self.cf = pd.read_csv(r'/Users/Jonas/OneDrive/Google Drive/Uni/UCB16/Machine Learning and Analytics/final_project/presidential-election-2016/2016_presidential_election_v5/county_facts.csv')
