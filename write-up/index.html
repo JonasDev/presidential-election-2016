@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
 
 <html>
 <head>
@@ -42,20 +41,31 @@ $(function(){
 
 function dataDidLoad(error, clusters, map) {
 
-  // console.log(clusters);
-  clusters_dict = {};
-  for (i=0; i < clusters.length; i++) {
-    clusters_dict[clusters[i].fips] = clusters[i].cluster;
+  console.log("asd");
+
+  function addZeros(input_string) {
+    if (input_string.length < 5) {
+      return "0" + input_string;
+    } else {
+      return input_string;
+    }
   }
 
-  // console.log(clusters_dict);
+  // console.log(clusters);
+  clusters_dict = {};
+  for (var i=0; i < clusters.length; i++) {
+    console.log(addZeros(clusters[i]["fips"].toString()));
+    clusters_dict[addZeros(clusters[i]["fips"].toString())] = clusters[i].cluster;
+  }
+
+  console.log(clusters_dict);
   drawMapOutline(map);
 
 };
 
 function fipsColor(geoid) {
   colorArray = ['#66c2a5','#fc8d62','#8da0cb','#e78ac3'];
-  // console.log(colorArray[1]);
+  // console.log(geoid, colorArray[clusters_dict[geoid]]);
   return colorArray[clusters_dict[geoid]];
 }
 
@@ -67,10 +77,11 @@ function drawMapOutline(map){
     .selectAll("path")
       .data(topojson.feature(map, map.objects.countiestiger2010).features)
     .enter().append("path")
-    .attr("fill", function(d,i) { return fipsColor(d.properties.GEOID10); })
+    // .attr("fill", function(d,i) { return "green"; })
+    .attr("fill", function(d,i) { return fipsColor((d.properties.GEOID10).toString()); })
     .attr("stroke", "black")
     .attr("d", path)
-    .on("click", function(d,i) { console.log(d.properties.NAME10); });
+    .on("click", function(d,i) { console.log(d.properties.GEOID10); });
 }
 </script>
 </body>
