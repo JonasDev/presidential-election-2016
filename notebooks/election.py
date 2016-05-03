@@ -9,12 +9,13 @@ from regression import RegressionModel
 class Election2016:
 
     def __init__(self):
-        test = 1
+        self.cfUntouched = pd.DataFrame()
 
     def init(self):
         self.loadDataSets()
         self.preprocessDataSets()
         self.candidateDataMapping = self.setupCandidates(self.data)
+
 
     def runRegression(self):
         self.regressor = RegressionModel(self.data, self.candidateDataMapping, self.testDataFrame)
@@ -27,9 +28,20 @@ class Election2016:
 
         # 2016 primary results
         self.pr = pd.read_csv('../2016_presidential_election_v5/primary_results.csv')
+
         # self.pr = pd.read_csv(r'/Users/Jonas/OneDrive/Google Drive/Uni/UCB16/Machine Learning and Analytics/final_project/presidential-election-2016/2016_presidential_election_v5/primary_results.csv')
 
         # self.clusters = pd.read_csv(r'/Users/Jonas/OneDrive/Google Drive/Uni/UCB16/Machine Learning and Analytics/final_project/presidential-election-2016/visualization/clustersout.csv')
+
+    def getStateForFips(self,fips):
+        if self.cfUntouched.empty:
+            self.cfUntouched = pd.read_csv('../2016_presidential_election_v5/county_facts.csv')
+        state =  self.cfUntouched[self.cfUntouched['fips'] == fips]['state_abbreviation']
+        if state.values:
+            return state.values[0]
+        else:
+            print "Invalid fips"
+
 
     def encodeStrings(self, data):
         # encode string as number for regression
